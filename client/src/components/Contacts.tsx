@@ -1,19 +1,23 @@
-import React, { FC, useState } from "react";
+import { observe } from "mobx";
+import { observer } from "mobx-react-lite";
+import React, { FC, useContext, useState } from "react";
 import styled from "styled-components";
+import { Context } from "..";
 import { IUser } from "../types/UserTypes";
 
 
 interface IContacts {
   user: IUser;
   contacts: IUser[];
-  changeChat: (chat:string) => void
+  changeChat: (chat:IUser) => void
 }
 const Contacts = ({ user, contacts, changeChat, ...props }: IContacts) => {
   const [curentSelected, setCurrentSelected] = useState("");
-
-  function handleCurrentChat(chat:any , email:string){
+  const { store } = useContext(Context);
+  console.log(store.test)
+  function handleCurrentChat(chat:IUser ){
     changeChat(chat)
-    setCurrentSelected(email)
+    setCurrentSelected(chat.email)
   }
   return (
     <Container>
@@ -25,13 +29,13 @@ const Contacts = ({ user, contacts, changeChat, ...props }: IContacts) => {
                 contact.email === curentSelected ? "selected" : ""
               } `}
               key={contact.email}
-              onClick ={() => handleCurrentChat(contact , contact.email)}
+              onClick ={() => handleCurrentChat(contact)}
             >
               <div className="avatar">
                 <img src="" alt="" />
               </div>
-              <div className="user">
-                <h4>{contact.name}</h4>
+              <div className="user" onClick={() => store.setTest(!(store.test))}>
+                <h4>{contact.name} {store.test.toString()}</h4>
               </div>
             </div>
           );
@@ -90,4 +94,4 @@ const Container = styled.div`
     }
   }
 `;
-export default Contacts;
+export default observer(Contacts);

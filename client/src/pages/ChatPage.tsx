@@ -11,11 +11,11 @@ import User from "../components/User";
 const ChatPage: FC = () => {
   const [contacts, setContacts] = useState<IUser[] | []>([]);
   const [curUser, setCurUser] = useState<IUser>({} as IUser);
-  const [curChat, setCurChat] = useState("");
+  const [curChat, setCurChat] = useState<IUser>({} as IUser);
   const { store } = useContext(Context);
   const navigate = useNavigate();
 
-  const handleChatChange = (chat: any) => {
+  const handleChatChange = (chat: IUser) => {
     setCurChat(chat);
   };
   useEffect(() => {
@@ -50,7 +50,7 @@ const ChatPage: FC = () => {
           contacts={contacts}
           changeChat={handleChatChange}/>
         <div className="chat">
-          {curChat ? <ChatContainer currentUser={curUser}/> : <h1>Please select the chat</h1>}
+          {JSON.stringify(curChat) !== "{}" ? <ChatContainer currentUser={curChat} exitChat = {handleChatChange}/> : <h1>Please select the chat</h1>}
         </div>
       </div>
     </Container>
@@ -76,7 +76,7 @@ const Container = styled.div`
     .chat {
       width: 70%;
       height: 100%;
-      background-color: darkblue;
+      background-color: #b6b6ba;
       
       text-align:center;
       h1{

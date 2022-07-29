@@ -6,6 +6,7 @@ export default class Store {
   userContacts: IUser[] = [];
   isAuth: boolean = false;
   isLoading: boolean = false;
+  test:boolean = true;
   constructor() {
     makeAutoObservable(this);
   }
@@ -13,7 +14,10 @@ export default class Store {
   setAuth(auth: boolean) {
     this.isAuth = auth;
   }
-
+  setTest(bool:boolean)
+  {
+    this.test = bool
+  }
   setUser(user: IUser) {
     this.user = user;
   }

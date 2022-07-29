@@ -1,0 +1,7 @@
+{
+    "mongoURI": "mongodb+srv://timDima:19022002@cluster0.62lyd.mongodb.net/?retryWrites=true&w=majority",
+    "jwtSecret": "jwtSecretToken",
+    "jwtExpiration": 180000,
+    "PORT": 3001
+  }
+  

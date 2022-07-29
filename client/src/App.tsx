@@ -9,17 +9,19 @@ import SignUpPage from "./pages/SignUpPage";
 
 //TODO: replace routes to the component
 function App() {
-  const {store} = useContext(Context)
-  if(!!localStorage.getItem('token')){
-    store.setAuth(true)
-    
+  //const navigate = useNavigate()
+  const { store } = useContext(Context);
+  if (!!localStorage.getItem("token")) {
+    store.setAuth(true);
   }
+  // if (!store.isAuth) {
+  //   navigate('/login')
+  // }
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="/" element={<ChatPage />} />
+        <Route path="/" element={<ChatPage />} />
         <Route path="/login" element={<LoginPage />} />
-        
         <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>
     </BrowserRouter>

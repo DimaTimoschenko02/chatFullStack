@@ -1,26 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { Context } from "..";
 import { IUser } from "../types/UserTypes";
 import Dialog from "./Dialog";
 
-export interface IProps {
-  currentUser: IUser;
-  exitChat: (chat:IUser) => void
-}
 
-const ChatContainer = ({ currentUser , exitChat}: IProps) => {
+
+const ChatContainer = () => {
+    const {store} = useContext(Context)
   return (
     <Container>
       <div className="header">
         <div className="button-back">
-          <button onClick={() => exitChat({} as IUser)}>back</button>
+          <button onClick={() => store.setChat({} as IUser)}>back</button>
         </div>
         <div className="user-info">
           <div className="avatar">
             <img src="" alt="" />
           </div>
           <div className="name">
-            <h4>{currentUser.name}</h4>
+            <h4>{store.user.name}</h4>
           </div>
         </div>
       </div>

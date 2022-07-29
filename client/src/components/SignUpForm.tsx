@@ -20,7 +20,7 @@ export const CustomForm: FC = () => {
         }}
         validationSchema={signupSchema}
         onSubmit={async (values) => {
-          await store.login(values)
+          await store.signup(values)
           navigate("/");
         }}
       >

@@ -9,48 +9,57 @@ import ChatContainer from "../components/ChatContainer";
 import styled from "styled-components";
 import User from "../components/User";
 const ChatPage: FC = () => {
-  const [contacts, setContacts] = useState<IUser[] | []>([]);
-  const [curUser, setCurUser] = useState<IUser>({} as IUser);
-  const [curChat, setCurChat] = useState<IUser>({} as IUser);
+  //const [contacts, setContacts] = useState<IUser[] | []>([]);
+  //const [curUser, setCurUser] = useState<IUser>({} as IUser);
+  //const [curChat, setCurChat] = useState<IUser>({} as IUser);
   const { store } = useContext(Context);
   const navigate = useNavigate();
 
-  const handleChatChange = (chat: IUser) => {
-    setCurChat(chat);
-  };
+  // const handleChatChange = (chat: IUser) => {
+  //   setCurChat(chat);
+  // };
   useEffect(() => {
     if (!store.isAuth) {
       navigate("/login");
     } else {
     }
-  }, []);
+  }, [store.isAuth]);
 
   useEffect(() => {
-    const setUsers = async () => await getContacts();
+    const setUsers = async () => {
+      await store.getContacts();
+      //await getContacts();}
+      await store.getUser(localStorage.getItem("token") as string);
+    };
     setUsers();
   }, []);
-  async function getContacts() {
-    store.getContacts().then((data) => {
-      setContacts(data as IUser[]);
-    });
-    store
-      .getUser(localStorage.getItem("token") as string)
-      .then((data) => setCurUser(data as IUser));
-  }
+  // async function getContacts() {
+  //   // store.getContacts().then((data) => {
+  //   //   setContacts(data as IUser[]);
+  //   // });
+  //   store
+  //     .getUser(localStorage.getItem("token") as string)
+  //     .then((data) => setCurUser(data as IUser));
+  // }
 
   return (
     <Container>
       <div className="container user">
-        <User user={curUser} />
+        <User />
       </div>
 
       <div className="container">
         <Contacts
-          user={curUser}
-          contacts={contacts}
-          changeChat={handleChatChange}/>
+          
+          //contacts={contacts}
+          //changeChat={handleChatChange}
+        />
         <div className="chat">
-          {JSON.stringify(curChat) !== "{}" ? <ChatContainer currentUser={curChat} exitChat = {handleChatChange}/> : <h1>Please select the chat</h1>}
+          {JSON.stringify(store.chat) !== "{}" ? (
+            <ChatContainer />
+          ) : (
+            <h1>Please select the chat</h1>
+          )}
         </div>
       </div>
     </Container>
@@ -77,11 +86,10 @@ const Container = styled.div`
       width: 70%;
       height: 100%;
       background-color: #b6b6ba;
-      
-      text-align:center;
-      h1{
-        color:white;
-        
+
+      text-align: center;
+      h1 {
+        color: white;
       }
     }
   }

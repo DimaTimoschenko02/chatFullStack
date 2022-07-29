@@ -1,15 +1,18 @@
-import React from 'react'
+import { observer } from 'mobx-react-lite'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
+import { Context } from '..'
 import { IUser } from '../types/UserTypes'
 
 interface ICurUser{
     user:IUser
 }
-const User = ({user} :ICurUser) =>{
-
+const User = () =>{
+    const {store} = useContext(Context)
     return(
         <Container>
-            user info
+            <button onClick={async() => {await store.logout()}}>LOGOUT</button>
+            {store.user.email}
         </Container>
     )
 }
@@ -22,4 +25,4 @@ const Container = styled.div`
     align-items:center;
     justify-content:center;
 `
-export default User
+export default observer(User)

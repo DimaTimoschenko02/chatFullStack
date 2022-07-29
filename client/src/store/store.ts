@@ -7,10 +7,13 @@ export default class Store {
   isAuth: boolean = false;
   isLoading: boolean = false;
   test:boolean = true;
+  chat:IUser = {} as IUser
   constructor() {
     makeAutoObservable(this);
   }
-
+  setChat(chat:IUser){
+    this.chat = chat
+  }
   setAuth(auth: boolean) {
     this.isAuth = auth;
   }

@@ -53,7 +53,7 @@ const Container = styled.div`
       border-radius: 20px;
       border: 3px solid orange;
     }
-    overflow: auto;
+    overflow:auto;
     width: 100%;
     height: 100%;
     display: flex;

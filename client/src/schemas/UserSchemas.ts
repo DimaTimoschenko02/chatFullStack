@@ -14,4 +14,4 @@ export const signupSchema = object({
 export const loginSchema = object({
   email: string().trim().email().required(),
   password: string().trim().min(6).max(20).required(),
-});
+}); 

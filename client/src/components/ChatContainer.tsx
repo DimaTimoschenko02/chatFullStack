@@ -1,12 +1,17 @@
 import React, { useContext } from "react";
+import { observer } from "mobx-react-lite";
 import styled from "styled-components";
 import { Context } from "..";
+import messageService from "../services/MessageService";
 import { IUser } from "../types/UserTypes";
 import Dialog from "./Dialog";
 import ChatInput from "./ui/ChatInput";
 
 const ChatContainer = () => {
   const { store } = useContext(Context);
+  const handleSendMsg = async(msg:string) =>{
+    const message = await messageService.sendMessage({from:store.user._id , to:store.chat._id , message:msg})
+  }
   return (
     <Container>
       <div className="header">
@@ -26,7 +31,7 @@ const ChatContainer = () => {
         <Dialog />
       </div>
       <div className="input">
-        <ChatInput />
+        <ChatInput handleSendChat={handleSendMsg} />
       </div>
     </Container>
   );
@@ -64,4 +69,4 @@ const Container = styled.div`
     align-self: auto;
   }
 `;
-export default ChatContainer;
+export default observer(ChatContainer);

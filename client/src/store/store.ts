@@ -1,25 +1,31 @@
 import { ILoginUser, ISignUser, IUser } from "../types/UserTypes";
 import { makeAutoObservable } from "mobx";
 import userService from "../services/UserService";
+import { IMessage } from "../types/MessageTypes";
+import messageService from "../services/MessageService";
 export default class Store {
   user = {} as IUser;
   userContacts: IUser[] = [];
+
   isAuth: boolean = false;
   isLoading: boolean = false;
-  test:boolean = true;
+
   chat:IUser = {} as IUser
+  chatMessages:IMessage[] = []
   constructor() {
     makeAutoObservable(this);
   }
   setChat(chat:IUser){
     this.chat = chat
   }
+  setChatMessages(messages:IMessage[]){
+    this.chatMessages = messages
+  }
   setAuth(auth: boolean) {
     this.isAuth = auth;
   }
-  setTest(bool:boolean)
-  {
-    this.test = bool
+  setUserContacts(contacts: IUser[]) {
+    this.userContacts = contacts;
   }
   setUser(user: IUser) {
     this.user = user;
@@ -43,9 +49,7 @@ export default class Store {
     }
     
   }
-  setUserContacts(contacts: IUser[]) {
-    this.userContacts = contacts;
-  }
+  
 
   async login(data: ILoginUser) {
     const res = await userService.login(data);
@@ -76,6 +80,14 @@ export default class Store {
       console.log(error);
     } finally {
       this.setIsLoading(false)
+    }
+  }
+  async getChatMessages(){
+    try{
+      const chatMessages = await messageService.getAllMessages({from:this.user._id , to:this.chat._id})
+      this.setChatMessages(chatMessages)
+    }catch(err){
+      console.log(err)
     }
   }
 }

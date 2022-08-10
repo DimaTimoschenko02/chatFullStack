@@ -1,14 +1,24 @@
 import { FC, useState } from "react";
 import styled from "styled-components";
 import EmojiPicker from "emoji-picker-react";
-import { IoMdSend } from "react-icons/io";
+import { IoMdFemale, IoMdSend } from "react-icons/io";
 import { BsEmojiSmileFill } from "react-icons/bs";
 
-const ChatInput: FC = () => {
+interface IProps{
+  handleSendChat: (msg:string) => void
+}
+const ChatInput = ({...props}:IProps) => {
   const [showEmojies , setShowEmojies] = useState<boolean>(false)
   const [message , setMessage] = useState<string>('')
   const handleEmojiClick = (event: any , emoji: any) =>{
     setMessage(message + emoji.emoji)
+  }
+  const handleSubmit = async (event:any) =>{
+    event.preventDefault()
+    if(message){
+      await props.handleSendChat(message)
+      setMessage('')
+    }
   }
   return (
     <Container>
@@ -20,8 +30,8 @@ const ChatInput: FC = () => {
           }
         </div>
       </div>
-      <form className="input-container">
-        <input type="text" placeholder="your message" value={message} onChange = {e => setMessage(e.target.value)}/>
+      <form className="input-container" onSubmit={handleSubmit}>
+        <input type="text" placeholder="your message" value={message} onChange = {e => setMessage(e.target.value)} onClick ={() => setShowEmojies(false)}/>
         <button type="submit">
           <IoMdSend />
         </button>

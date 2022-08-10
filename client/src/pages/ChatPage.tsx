@@ -32,7 +32,7 @@ const ChatPage: FC = () => {
       await store.getUser(localStorage.getItem("token") as string);
     };
     setUsers();
-  }, []);
+  }, [store.userContacts , store.user]);
   // async function getContacts() {
   //   // store.getContacts().then((data) => {
   //   //   setContacts(data as IUser[]);
